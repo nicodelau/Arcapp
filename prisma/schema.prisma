@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  cuit     String @unique
+  clave    String
+}
+
+model Comprobante {
+  id            Int                 @id @default(autoincrement())
+  cantReg       Int
+  puntoVenta    Int
+  tipoCbte      Int
+  concepto      Int
+  docTipo       Int
+  docNro        BigInt
+  cbteDesde     Int
+  cbteHasta     Int
+  cbteFch       String
+  impTotal      Float
+  impTotConc    Float
+  impNeto       Float
+  impOpEx       Float
+  impIVA        Float
+  impTrib       Float
+  monId         String
+  monCotiz      Float
+  createdAt     DateTime            @default(now())
+  cae           Int
+
+  ivaItems      IvaItem[]           @relation("ComprobanteIVA")
+  productos     ProductoFacturado[] @relation("ComprobanteProductos")
+}
+
+model IvaItem {
+  id            Int           @id @default(autoincrement())
+  comprobanteId Int
+  tipoId        Int
+  baseImp       Float
+  importe       Float
+
+  comprobante   Comprobante   @relation(fields: [comprobanteId], references: [id], name: "ComprobanteIVA")
+}
+
+model Producto {
+  id Int @id @default(autoincrement())
+  id_arca Int
+  descripcion    String
+  precioUnitario Float
+
+  productosFacturados ProductoFacturado[]   @relation("Producto")
+
+}
+
+model ProductoFacturado {
+  id             Int         @id @default(autoincrement())
+  comprobanteId  Int
+  productoId     Int
+  cantidad       Float
+  total          Float
+
+  comprobante    Comprobante @relation(fields: [comprobanteId], references: [id], name: "ComprobanteProductos")
+  producto       Producto    @relation(fields: [productoId], references: [id], name: "Producto")
+}
+
+model CondicionIva {
+  id             Int         @id @default(autoincrement())
+  condicionId  Int
+  descripcion    String
+
+}
