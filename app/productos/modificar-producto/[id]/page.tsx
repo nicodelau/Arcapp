@@ -8,6 +8,7 @@ export default function ModificarProducto({ params }: { params: { id: string } }
     const [success, setSuccess] = React.useState<string | null>(null);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [form, setForm] = useState({
+        id: productoId,
         id_arca: "",
         descripcion: "",
         precioUnitario: "",
@@ -35,7 +36,7 @@ export default function ModificarProducto({ params }: { params: { id: string } }
     const fetchProducto = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`/api/arcapp/productos?id_arca=${productoId}`, {
+            const response = await fetch(`/api/arcapp/productos?id=${productoId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -48,12 +49,17 @@ export default function ModificarProducto({ params }: { params: { id: string } }
             if (producto.error) {
                 throw new Error(producto.error);
             }
-            setProducto(producto);
+
+            setProducto(producto[0]);
+            setForm({
+                id: productoId,
+                id_arca: producto[0]?.id_arca || '',
+                descripcion: producto[0]?.descripcion || '',
+                precioUnitario: producto[0]?.precioUnitario || '',
+            });
             setLoading(false);
             setSuccess('Producto cargado exitosamente');
-            setTimeout(() => {
-                setSuccess('');
-            }, 3000);
+
         } catch (error) {
             setError(error.message);
             setSuccess(null);
@@ -66,6 +72,40 @@ export default function ModificarProducto({ params }: { params: { id: string } }
     useEffect(() => {
         fetchProducto();
     }, [productoId]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const response = await fetch(`/api/arcapp/productos?id=${form.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al modificar el producto');
+            }
+
+            const data = await response.json();
+            setSuccess('Producto modificado exitosamente');
+            setTimeout(() => {
+                setSuccess(null);
+            }, 3000);
+        } catch (error: any) {
+            setError(error.message);
+            setTimeout(() => {
+                setError(null);
+            }, 3000);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="container mt-5">
@@ -82,22 +122,22 @@ export default function ModificarProducto({ params }: { params: { id: string } }
                 </section>
             )}
             {success && (
-                            <section className="mt-6">
+                <section className="mt-6">
                 <h2 className="text-2xl font-bold text-blue-900 mb-4 border-b pb-1 text-center">Modificar Producto</h2>
                 <div className="flex flex-col items-center gap-4 justify-center">
-                    <form action={`/productos/modificar-producto/${productoId}`} method="POST" className="w-full max-w-md">
+                    <form onSubmit={handleSubmit} method="POST" className="w-full max-w-md">
                         <div className="relative z-0 w-full mb-5 group">
                             <input
                                 type="number"
-                                name="docArca"
-                                id="docArca"
+                                name="id_arca"
+                                id="id_arca"
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" "
-                                onChange={(e) => handleChange(e)}
-                                value={producto ? producto.id_arca : ''}
+                                onChange={handleChange}
+                                value={form.id_arca}
                                 required
                             />
-                            <label htmlFor="docArca" className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] left-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5">Número de ID en ARCA</label>
+                            <label htmlFor="id_arca" className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] left-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5">Número de ID en ARCA</label>
                         </div>
                         <div className="relative z-0 w-full mb-5 group">
                             <input
@@ -106,8 +146,8 @@ export default function ModificarProducto({ params }: { params: { id: string } }
                                 id="descripcion"
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" "
-                                onChange={(e) => handleChange(e)}
-                                value={producto ? producto.descripcion : ''}
+                                onChange={handleChange}
+                                value={form.descripcion}
                                 required
                             />
                             <label htmlFor="descripcion" className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] left-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5">Descripción</label>
@@ -119,8 +159,8 @@ export default function ModificarProducto({ params }: { params: { id: string } }
                                 id="precioUnitario"
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" "
-                                onChange={(e) => handleChange(e)}
-                                value={producto ? producto.precioUnitario : ''}
+                                onChange={handleChange}
+                                value={form.precioUnitario}
                                 required
                             />
                             <label htmlFor="precioUnitario" className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] left-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5">Precio Unitario</label>

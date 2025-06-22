@@ -1,3 +1,9 @@
 {
-  "/page": "app/page.js"
+  "/not-found": "app/not-found.js",
+  "/page": "app/page.js",
+  "/productos/page": "app/productos/page.js",
+  "/productos/crear-producto/page": "app/productos/crear-producto/page.js",
+  "/productos/ver-producto/page": "app/productos/ver-producto/page.js",
+  "/productos/modificar-producto/[id]/page": "app/productos/modificar-producto/[id]/page.js",
+  "/comprobantes/page": "app/comprobantes/page.js"
 }

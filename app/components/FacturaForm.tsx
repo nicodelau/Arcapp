@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Comprobante {
   idIVAReceptor: number | null;
@@ -63,9 +63,9 @@ export default function FacturaForm() {
     setAlicuotas(data.ResultGet.IvaTipo);
   };
 
-  useState(() => {
+  useEffect(() => {
     fetchAlicuotas();
-  });
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });

@@ -121,7 +121,7 @@ export default function CrearProductoPage() {
                             />
                             <label htmlFor="precioUnitario" className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] left-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2.5">Precio Unitario</label>
                         </div>
-                        <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors mt-6">Crear Producto</button>
+                        <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors mt-6 cursor-pointer">Crear Producto</button>
                     </div>
                 </section>
             </div>

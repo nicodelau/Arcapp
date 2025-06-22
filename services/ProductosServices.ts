@@ -14,10 +14,10 @@ export async function get_products() {
   }
 }
 
-export async function get_product_by_id(id_arca: string) {
+export async function get_product_by_id(id: string) {
   try {
     const producto = await prisma.producto.findFirst({
-      where: { id_arca: parseInt(id_arca) }
+      where: { id: parseInt(id) }
     })
     return producto;
   } catch (error) {

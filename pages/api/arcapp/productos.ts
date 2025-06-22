@@ -58,6 +58,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
 
+    if(req.method == 'PUT' && req.query.id) {
+        const id = req.query.id as string;
+        const { descripcion, precioUnitario, id_arca } = req.body;
 
+        if (!descripcion || !precioUnitario) {
+            return res.status(400).json({ error: 'Faltan datos requeridos' });
+        }
+
+        try {
+            const producto = {
+                id_arca: parseInt(id_arca),
+                descripcion,
+                precioUnitario: parseFloat(precioUnitario)
+            };
+
+            const updatedProducto = await update_product(id, producto);
+
+            if (!updatedProducto) {
+                return res.status(404).json({ error: 'Producto no encontrado' });
+            }
+
+            return res.status(200).json({ message: 'Producto actualizado exitosamente', producto: updatedProducto });
+        } catch (error) {
+            console.error('Error al actualizar el producto:', error);
+            return res.status(500).json({ error: 'Error al actualizar el producto' });
+        }
+
+        return res.status(405).json({ error: 'Método no permitido' });
+
+    }
+
+    if(req.method == 'DELETE' && req.query.id) {
+        const id = req.query.id as string;
+        
+        try {
+            const deleted = await delete_product(id);
+
+            if (!deleted) {
+                return res.status(404).json({ error: 'Producto no encontrado' });
+            }
+
+            return res.status(200).json({ message: 'Producto eliminado exitosamente' });
+        } catch (error) {
+            console.error('Error al eliminar el producto:', error);
+            return res.status(500).json({ error: 'Error al eliminar el producto' });
+        }
+    }
 
 }

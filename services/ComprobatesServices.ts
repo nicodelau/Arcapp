@@ -1,4 +1,3 @@
-import { create } from 'domain';
 import { prisma  } from '../lib/prisma';
 
 export async function get_comprobantes() {
@@ -31,9 +30,9 @@ export async function create_comprobante(data: any) {
   try {
     const comprobanteData = {
       cantReg: data.CantReg,
-      puntoVenta: data.PtoVta, // Use correct field name as per Prisma schema
-      tipoCbte: data.CbteTipo, // Use correct field name as per Prisma schema
-      cae: data.Cae,           // Make sure this is provided in data
+      puntoVenta: data.PtoVta,
+      tipoCbte: data.CbteTipo,
+      cae: data.Cae,          
       concepto: data.Concepto,
       docTipo: data.DocTipo,
       docNro: data.DocNro,
