@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://arca_owner:npg_ZEdIy3OWD2wt@ep-fragrant-firefly-a8jql7vu-pooler.eastus2.azure.neon.tech/arca?sslmode=require"
 }
 
 model User {
