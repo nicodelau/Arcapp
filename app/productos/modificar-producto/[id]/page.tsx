@@ -1,8 +1,19 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, use } from 'react';
 
-export default function ModificarProducto({ params }: { params: { id: string } }) {
-    const productoId = params.id;
+interface PageProps {
+    params: Promise<{ id: string }>;
+}
+
+type Producto = {
+    id?: number;
+    id_arca?: number;
+    descripcion?: string;
+    precioUnitario?: number;
+};
+
+export default function ModificarProducto({ params }: PageProps) {
+    const { id: productoId } = use(params);
     const [producto, setProducto] = React.useState<Producto | null>((null));
     const [error, setError] = React.useState<string | null>(null);
     const [success, setSuccess] = React.useState<string | null>(null);

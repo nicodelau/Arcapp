@@ -1,4 +1,10 @@
-export default function ComprobantesPage() {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function ComprobantesPage({ params }: PageProps) {
+  const { id: comprobanteId } = await params;
+  
   return (
     <div className="container mt-5">
       <section className="mt-6">
