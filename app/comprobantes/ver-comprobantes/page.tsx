@@ -1,12 +1,19 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 
-export default function Page({ params }: { params: { nro_comprobante?: string, tipo_comprobante?: string } }) {
-    const { nro_comprobante } = params;
-    const [comprobante, setComprobante] = useState<string | null>(nro_comprobante || null);
-    const [tipoComprobante, setTipoComprobante] = useState<string>('6');
+type Props = {
+    params: {
+        tipo_comprobante: string;
+        nro_comprobante: string;
+    };
+};
+
+export default function Page({ params }: Props) {
+    const { tipo_comprobante, nro_comprobante } = params;
+    const [comprobante, setComprobante] = useState<string>(nro_comprobante);
+    const [tipoComprobante, setTipoComprobante] = useState<string>(tipo_comprobante);
     const [comprobanteData, setComprobanteData] = useState<object | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -21,7 +28,7 @@ export default function Page({ params }: { params: { nro_comprobante?: string, t
                 throw new Error('Comprobante no encontrado');
             }
             const data = await response.json();
-            if(data.Errors) {
+            if (data.Errors) {
                 // console.log(data.Errors.Err[0].Code, data.Errors.Err[0].Msg);
                 setError(data.Errors.Err[0].Msg);
 
@@ -73,19 +80,19 @@ export default function Page({ params }: { params: { nro_comprobante?: string, t
 
     return (
         <div className="container mt-5">
-                <h1>Ver tributos</h1>
-                {(tributos && tributos.length > 0) && (
-                    <div className="mb-3">
-                        <label htmlFor="tipo_tributo" className="form-label">Tipos de Tributos</label>
-                        <select className="form-select" id="tipo_tributo">
-                            {tributos.map((tributo: any) => (
-                                <option key={tributo.Id} value={tributo.Id}>
-                                    {tributo.Desc}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
+            <h1>Ver tributos</h1>
+            {(tributos && tributos.length > 0) && (
+                <div className="mb-3">
+                    <label htmlFor="tipo_tributo" className="form-label">Tipos de Tributos</label>
+                    <select className="form-select" id="tipo_tributo">
+                        {tributos.map((tributo: any) => (
+                            <option key={tributo.Id} value={tributo.Id}>
+                                {tributo.Desc}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            )}
             <form onSubmit={fetchComprobante} className='form-comprobante'>
                 <div className="mb-3">
                     <label htmlFor="nro_comprobante" className="form-label">Número de Comprobante</label>
@@ -97,7 +104,7 @@ export default function Page({ params }: { params: { nro_comprobante?: string, t
                         min={1}
                         max={9999}
                         value={comprobante ?? '1'}
-                        onChange={(e) => setComprobante(e.target.value)}/>
+                        onChange={(e) => setComprobante(e.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="tipo_comprobante" className="form-label">Tipo de Comprobante</label>
