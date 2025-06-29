@@ -3,3 +3,4 @@ node_modules
 /certs
 .vercel
 .next
+./afip.ts
