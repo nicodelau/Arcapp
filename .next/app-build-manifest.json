@@ -21,30 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/comprobantes/crear-comprobante/page.js"
     ],
+    "/comprobantes/ver-comprobante/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/comprobantes/ver-comprobante/page.js"
+    ],
     "/productos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/productos/page.js"
-    ],
-    "/productos/crear-producto/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/productos/crear-producto/page.js"
-    ],
-    "/productos/ver-producto/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/productos/ver-producto/page.js"
-    ],
-    "/productos/modificar-producto/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/productos/modificar-producto/[id]/page.js"
-    ],
-    "/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
     ]
   }
 }

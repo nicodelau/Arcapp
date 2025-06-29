@@ -14,15 +14,27 @@ export async function get_comprobantes() {
   }
 }
 
-export async function get_comprobante_by_id(cae: string) {
+export async function get_comprobante_by_id(id: string) {
   try {
     const comprobante = await prisma.comprobante.findFirst({
-      where: { cae: parseInt(cae) }
+      where: { id: parseInt(id) }
     })
     return comprobante;
   } catch (error) {
     console.error('Error al obtener el comprobante:', error);
     throw new Error('Error al obtener el comprobante');
+  }
+}
+
+export async function get_comprobante_by_tipo(tipo: string) {
+  try {
+    const comprobante = await prisma.comprobante.findFirst({
+      where: { tipoCbte: parseInt(tipo) }
+    });
+    return comprobante;
+  } catch (error) {
+    console.error('Error al obtener el comprobante por tipo:', error);
+    throw new Error('Error al obtener el comprobante por tipo');
   }
 }
 

@@ -33,7 +33,7 @@ model Comprobante {
   monId         String
   monCotiz      Float
   createdAt     DateTime            @default(now())
-  cae           Int
+  cae           String
 
   ivaItems      IvaItem[]           @relation("ComprobanteIVA")
   productos     ProductoFacturado[] @relation("ComprobanteProductos")

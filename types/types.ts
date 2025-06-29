@@ -26,6 +26,9 @@ type Comprobante = {
     MonIdcreatedAt?: string | null;
     MonCotizivaItems?: { Id: number; BaseImp: number; Importe: number }[];
     Productos?: Producto[];
+    CbtesAsoc?: { Tipo: number; PtoVta: number; Nro: number }[];
+    cbteFch?: string | null;
+    cae?: string;
 };
 
 type ComprobanteAfip = {
@@ -46,9 +49,69 @@ type ComprobanteAfip = {
     ImpTrib?: number;
     MonId?: number;
     MonCotiz?: number;
+    CbtesAsoc?: { Tipo: number; PtoVta: number; Nro: number }[];
     Iva?: Array<{
         Id: number;
         BaseImp: number;
         Importe: number;
     }>;
 }
+
+
+// [
+//     {
+//         "Id": 1,
+//         "Desc": "IVA Responsable Inscripto",
+//         "Cmp_Clase": "A/M/C"
+//     },
+//     {
+//         "Id": 6,
+//         "Desc": "Responsable Monotributo",
+//         "Cmp_Clase": "A/M/C"
+//     },
+//     {
+//         "Id": 13,
+//         "Desc": "Monotributista Social",
+//         "Cmp_Clase": "A/M/C"
+//     },
+//     {
+//         "Id": 16,
+//         "Desc": "Monotributo Trabajador Independiente Promovido",
+//         "Cmp_Clase": "A/M/C"
+//     },
+//     {
+//         "Id": 4,
+//         "Desc": "IVA Sujeto Exento",
+//         "Cmp_Clase": "B/C"
+//     },
+//     {
+//         "Id": 5,
+//         "Desc": "Consumidor Final",
+//         "Cmp_Clase": "B/C"
+//     },
+//     {
+//         "Id": 7,
+//         "Desc": "Sujeto No Categorizado",
+//         "Cmp_Clase": "B/C"
+//     },
+//     {
+//         "Id": 8,
+//         "Desc": "Proveedor del Exterior",
+//         "Cmp_Clase": "B/C"
+//     },
+//     {
+//         "Id": 9,
+//         "Desc": "Cliente del Exterior",
+//         "Cmp_Clase": "B/C"
+//     },
+//     {
+//         "Id": 10,
+//         "Desc": "IVA Liberado – Ley N° 19.640",
+//         "Cmp_Clase": "B/C"
+//     },
+//     {
+//         "Id": 15,
+//         "Desc": "IVA No Alcanzado",
+//         "Cmp_Clase": "B/C"
+//     }
+// ]

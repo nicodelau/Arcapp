@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Comprobante" ALTER COLUMN "cae" SET DATA TYPE TEXT;
