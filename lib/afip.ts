@@ -3,17 +3,14 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const CERT_PATH = '/tmp/arca.crt';
-const KEY_PATH  = '/tmp/arca.key';
-
-fs.writeFileSync(CERT_PATH, process.env.ARCA_WS_CRT!);
-fs.writeFileSync(KEY_PATH,  process.env.ARCA_WS_KEY!);
+const cert = Buffer.from(process.env.ARCA_WS_CRT_B64!, 'base64').toString('utf8');
+const key  = Buffer.from(process.env.ARCA_WS_KEY_B64!, 'base64').toString('utf8');
 
 const afip = new Afip({
-  cuit: Number(process.env.CUIT),
-  key: KEY_PATH,
-  cert: CERT_PATH,
-  production: true
+  production: true,
+  cuit:    +process.env.CUIT!,
+  cert,
+  key,
 });
 
 export default afip;
