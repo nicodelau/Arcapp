@@ -1,13 +1,14 @@
 {
+  "version": 2,
   "functions": {
     "pages/api/**/*.{js,ts}": {
-      "runtime": "nodejs20.x"
+      "runtime": "vercel/node@20.x"
     },
     "app/api/**/*.{js,ts}": {
-      "runtime": "nodejs20.x"
+      "runtime": "vercel/node@20.x"
     },
     "api/**/*.{js,ts}": {
-      "runtime": "nodejs20.x"
+      "runtime": "vercel/node@20.x"
     }
   }
 }
