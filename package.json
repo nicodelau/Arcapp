@@ -22,14 +22,15 @@
     "puppeteer-core": "^24.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^4.1.11"
-  },
-  "devDependencies": {
+    "tailwindcss": "^4.1.11",
     "@types/node": "^24.0.1",
     "@types/react": "^19.1.8",
     "glob": "^9.3.5",
     "prisma": "^5.12.0",
     "rimraf": "^4.4.1",
     "typescript": "^5.4.0"
+  },
+  "devDependencies": {
+    
   }
 }
