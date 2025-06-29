@@ -3,15 +3,16 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
 
-dotenv.config();
+const CERT_PATH = '/tmp/arca.crt';
+const KEY_PATH  = '/tmp/arca.key';
 
-const key = fs.readFileSync(path.resolve(process.cwd(), 'certs/clave.key')).toString();
-const cert = fs.readFileSync(path.resolve(process.cwd(), 'certs/certificado.crt')).toString();
+fs.writeFileSync(CERT_PATH, process.env.ARCA_WS_CRT!);
+fs.writeFileSync(KEY_PATH,  process.env.ARCA_WS_KEY!);
 
 const afip = new Afip({
   cuit: Number(process.env.CUIT),
-  key: key,
-  cert: cert,
+  key: KEY_PATH,
+  cert: CERT_PATH,
   production: true
 });
 

@@ -11,25 +11,30 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/productos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/productos/page.js"
+    ],
+    "/productos/ver-producto/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/productos/ver-producto/page.js"
+    ],
+    "/productos/crear-producto/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/productos/crear-producto/page.js"
+    ],
     "/comprobantes/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/comprobantes/page.js"
     ],
-    "/comprobantes/crear-comprobante/page": [
+    "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/comprobantes/crear-comprobante/page.js"
-    ],
-    "/comprobantes/ver-comprobante/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/comprobantes/ver-comprobante/page.js"
-    ],
-    "/productos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/productos/page.js"
+      "static/chunks/app/not-found.js"
     ]
   }
 }
