@@ -1,7 +1,10 @@
 {
   "functions": {
     "api/**/*.js": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs18.19.1"
+    },
+    "api/**/*.ts": {
+      "runtime": "nodejs18.19.1"
     }
   }
 }
