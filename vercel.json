@@ -1,12 +1,4 @@
 {
-  "functions": {
-    "**/*.ts": {
-      "runtime": "nodejs18.x"
-    },
-    "**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "build": {
     "env": {
       "NODE_OPTIONS": "--tls-cipher-list=DEFAULT@SECLEVEL=1"
