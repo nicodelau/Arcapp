@@ -1,6 +1,9 @@
+'use client';
+
 import Navbar from "./components/Navbar";
 import "./globals.css";
 import 'animate.css';
+import { AuthProvider } from "../lib/useAuth";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -27,13 +30,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           href="/assets/images/favicon.ico"
           type="image/x-icon"
         />
-
       </head>
       <body>
-        <Navbar />
-        <div className="container mx-auto px-4">
-          {children}
-        </div>
+        <AuthProvider>
+          <Navbar />
+          <div className="container mx-auto px-4">
+            {children}
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );
