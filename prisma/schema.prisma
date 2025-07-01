@@ -8,77 +8,71 @@ datasource db {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
-  username      String @unique
-  user_email    String @unique
-  user_password String
-  user_uuid     String @unique @default(uuid())
-  nombre        String?
-  apellido      String?
+  id            Int      @id @default(autoincrement())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  user_email    String   @unique
+  user_password String
+  user_uuid     String   @unique @default(uuid())
+  username      String   @unique
+  nombre        String?
+  apellido      String?
 }
 
 model Comprobante {
-  id            Int                 @id @default(autoincrement())
-  cantReg       Int
-  puntoVenta    Int
-  tipoCbte      Int
-  concepto      Int
-  docTipo       Int
-  docNro        BigInt
-  cbteDesde     Int
-  cbteHasta     Int
-  cbteFch       String
-  impTotal      Float
-  impTotConc    Float
-  impNeto       Float
-  impOpEx       Float
-  impIVA        Float
-  impTrib       Float
-  monId         String
-  monCotiz      Float
-  createdAt     DateTime            @default(now())
-  cae           String
-
-  ivaItems      IvaItem[]           @relation("ComprobanteIVA")
-  productos     ProductoFacturado[] @relation("ComprobanteProductos")
+  id         Int                 @id @default(autoincrement())
+  puntoVenta Int
+  tipoCbte   Int
+  concepto   Int
+  docTipo    Int
+  docNro     BigInt
+  createdAt  DateTime            @default(now())
+  cantReg    Int
+  cbteDesde  Int
+  cbteFch    String
+  cbteHasta  Int
+  impIVA     Float
+  impNeto    Float
+  impOpEx    Float
+  impTotConc Float
+  impTotal   Float
+  impTrib    Float
+  monCotiz   Float
+  monId      String
+  cae        String
+  ivaItems   IvaItem[]           @relation("ComprobanteIVA")
+  productos  ProductoFacturado[] @relation("ComprobanteProductos")
 }
 
 model IvaItem {
-  id            Int           @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   comprobanteId Int
   tipoId        Int
   baseImp       Float
   importe       Float
-
-  comprobante   Comprobante   @relation(fields: [comprobanteId], references: [id], name: "ComprobanteIVA")
+  comprobante   Comprobante @relation("ComprobanteIVA", fields: [comprobanteId], references: [id])
 }
 
 model Producto {
-  id Int @id @default(autoincrement())
-  id_arca Int
-  descripcion    String
-  precioUnitario Float
-
-  productosFacturados ProductoFacturado[]   @relation("Producto")
-
+  id                  Int                 @id @default(autoincrement())
+  descripcion         String
+  precioUnitario      Float
+  id_arca             Int
+  productosFacturados ProductoFacturado[] @relation("Producto")
 }
 
 model ProductoFacturado {
-  id             Int         @id @default(autoincrement())
-  comprobanteId  Int
-  productoId     Int
-  cantidad       Float
-  total          Float
-
-  comprobante    Comprobante @relation(fields: [comprobanteId], references: [id], name: "ComprobanteProductos")
-  producto       Producto    @relation(fields: [productoId], references: [id], name: "Producto")
+  id            Int         @id @default(autoincrement())
+  comprobanteId Int
+  cantidad      Float
+  total         Float
+  productoId    Int
+  comprobante   Comprobante @relation("ComprobanteProductos", fields: [comprobanteId], references: [id])
+  producto      Producto    @relation("Producto", fields: [productoId], references: [id])
 }
 
 model CondicionIva {
-  id             Int         @id @default(autoincrement())
-  condicionId  Int
-  descripcion    String
-
+  id          Int    @id @default(autoincrement())
+  condicionId Int
+  descripcion String
 }
