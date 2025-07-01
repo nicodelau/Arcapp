@@ -5,7 +5,7 @@ import * as fs from 'fs';
 const setupProductionTLS = () => {
   if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
     // Configurar TLS de forma segura solo cuando sea necesario
-    // process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     
     // Crear y configurar agente HTTPS global específico para AFIP
     const https = require('https');
