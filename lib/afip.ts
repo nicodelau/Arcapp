@@ -1,48 +1,47 @@
 import { Afip } from "afip.ts";
-import * as fs from 'fs';
+import * as fs from "fs";
+import * as https from "https";
+import * as path from "path";
 
-// Configuración TLS solo para entorno de producción usando variables de entorno
-const setupProductionTLS = () => {
-  if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
-    // Configurar TLS de forma segura solo cuando sea necesario
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    
-    // Crear y configurar agente HTTPS global específico para AFIP
-    const https = require('https');
-    const originalAgent = https.globalAgent;
-    
-    https.globalAgent = new https.Agent({
-      ...originalAgent.options,
-      rejectUnauthorized: false,
-      keepAlive: true,
-      timeout: 60000,
-      maxSockets: 10
-    });
-  }
-};
-
-setupProductionTLS();
-
-const TICKETS_DIR = '/tmp/afip-tickets';
-
+// Directorio para tickets
+const TICKETS_DIR = "/tmp/afip-tickets";
 if (!fs.existsSync(TICKETS_DIR)) {
   fs.mkdirSync(TICKETS_DIR, { recursive: true });
 }
 
-// Verificar variables de entorno requeridas
-if (!process.env.ARCA_WS_CRT_B64 || !process.env.ARCA_WS_KEY_B64 || !process.env.CUIT) {
-  throw new Error('Faltan variables de entorno requeridas: ARCA_WS_CRT_B64, ARCA_WS_KEY_B64, CUIT');
+// Validar env vars
+for (const v of ["ARCA_WS_CRT_B64", "ARCA_WS_KEY_B64", "CUIT"]) {
+  if (!process.env[v]) {
+    throw new Error(`Falta la variable de entorno ${v}`);
+  }
 }
 
-const cert = Buffer.from(process.env.ARCA_WS_CRT_B64!, 'base64').toString('utf8');
-const key = Buffer.from(process.env.ARCA_WS_KEY_B64!, 'base64').toString('utf8');
+// Convertir base64 → PEM
+const cert = Buffer.from(process.env.ARCA_WS_CRT_B64!, "base64");
+const key  = Buffer.from(process.env.ARCA_WS_KEY_B64!, "base64");
+// Cargar la CA de AFIP que guardaste en tu repo
+const ca   = fs.readFileSync(path.join(__dirname, "arca_ws_ca.pem"));
 
-const afip = new Afip({
-  production: true,
-  cuit: +process.env.CUIT!,
+// Crear agente HTTPS seguro
+const agent = new https.Agent({
   cert,
   key,
-  ticketPath: TICKETS_DIR
+  ca,
+  keepAlive: true,
+  timeout: 60_000,
+  maxSockets: 10,
+  rejectUnauthorized: true,    // ¡importante que siga validando!
+});
+
+// Inicializar Afip con ese agente
+const afip = new Afip({
+  production: true,
+  cuit: Number(process.env.CUIT),
+  cert: cert.toString("utf8"),
+  key : key.toString("utf8"),
+  ticketPath: TICKETS_DIR,
+  // Si la librería lo permite, pasas el agente:
+  agent
 });
 
 export default afip;
