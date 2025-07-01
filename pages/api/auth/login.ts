@@ -17,12 +17,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Username y password son requeridos' });
     }
 
-    // Buscar usuario por username o email
     const user = await prisma.user.findFirst({
       where: {
         OR: [
-          { username: username },
-          { user_email: username }
+          { username: username }
         ]
       }
     });
