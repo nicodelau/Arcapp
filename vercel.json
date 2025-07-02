@@ -3,10 +3,5 @@
     "env": {
       "NODE_OPTIONS": "--tls-cipher-list=DEFAULT@SECLEVEL=1"
     }
-  },
-  "functions": {
-    "pages/api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
   }
 }
